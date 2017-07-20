@@ -35,7 +35,11 @@ class Browser
     end
     @closed = false
 
-    @http = Net::HTTP.start @host, @port
+    opts[:read_timeout] ||= 1
+    opts[:open_timeout] ||= 1
+    opt = { read_timeout: opts[:read_timeout],
+            open_timeout: opts[:open_timeout] }
+    @http = Net::HTTP.start @host, @port, opt
   end
 
   # Closes the connection the browser.
